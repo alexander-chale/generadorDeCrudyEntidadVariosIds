@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import ofertaContra.entity.OfertaContra;
+
 public class GeneraDirectorioServiceImpl {
 
     public void generaDirectorioServiceImpl(String directorioServicioImplementacion, String nombreEntidad,
@@ -29,14 +31,15 @@ public class GeneraDirectorioServiceImpl {
                 out.println("import org.springframework.data.domain.Pageable;");
                 out.println("import org.springframework.stereotype.Service;");
                 out.println("");
-                out.println("import jakarta.transaction.Transactional;");
-                out.println("");
                 out.println(
                         "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                 + ";");
                 out.println(
                         "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
-                                            + "Id;");
+                                + "Id;");
+                out.println("");
+                out.println("import jakarta.transaction.Transactional;");
+                out.println("");
                 out.println("import " + nombreDeAplicacion + "." + nombreEntidad + ".repository."
                         + entidadMayusculaInicial + "Repository;");
                 out.println(
@@ -50,10 +53,20 @@ public class GeneraDirectorioServiceImpl {
 
             
                 out.println("");
-                out.println("@Autowired");
-                out.println("private " + entidadMayusculaInicial + "Repository " + nombreEntidad + "Repository;");
+                out.println("   @Autowired");
+                out.println("   private " + entidadMayusculaInicial + "Repository " + nombreEntidad + "Repository;");
                 out.println("");
-    
+
+                out.println("   @Override");
+                out.println("   public Page<"+entidadMayusculaInicial+"> findALL(Pageable pageable) throws Exception {");
+                out.println("      try {");
+                out.println("          Page<"+entidadMayusculaInicial+"> entities = "+nombreEntidad+"Repository.findAll(pageable);");
+                out.println("          return entities;");
+                out.println("      } catch (Exception e) {");
+                out.println("          throw new Exception(e.getMessage());");
+                out.println("      }");
+                out.println("   }");
+                 
                 out.println("");
                 out.println("}");
            

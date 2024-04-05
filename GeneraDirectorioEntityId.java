@@ -109,111 +109,84 @@ public class GeneraDirectorioEntityId {
 
                     out.println("package " + paquete + "." + nombreEntidad + ".entity;");
                     out.println("");
+                    out.println("import java.io.Serializable;");
+                    out.println("");
                     out.println("import jakarta.persistence.Column;");
-                    out.println("import jakarta.persistence.EmbeddedId;");
-                    out.println("import jakarta.persistence.Entity;");
-                    out.println("import jakarta.persistence.FetchType;");
-                    out.println("import jakarta.persistence.JoinColumn;");
-                    out.println("import jakarta.persistence.ManyToOne;");
-                    out.println("import jakarta.persistence.ManyToMany;");
-                    out.println("import jakarta.persistence.OneToMany;");
-                    out.println("import jakarta.persistence.MapsId;");
-                    out.println("import jakarta.persistence.Table;");
-                    out.println("import lombok.AllArgsConstructor;");
+                    out.println("import jakarta.persistence.Embeddable;");
+                    out.println("");
                     out.println("import lombok.Getter;");
-                    out.println("import lombok.NoArgsConstructor;");
                     out.println("import lombok.Setter;");
+                    out.println("import lombok.AllArgsConstructor;");
+                    out.println("import lombok.NoArgsConstructor;");
+                    out.println("import lombok.EqualsAndHashCode;");
                     out.println("import lombok.ToString;");
                     out.println("");
-                    out.println("import java.util.Set;");
-                    out.println("");
-                    out.println("import com.fasterxml.jackson.annotation.JsonIgnore;");
-                    out.println("");
-                    out.println("@Entity");
-                    out.println("@Table(schema = \"" + schema + "\", name = \"" + nombreTablaValidada + "\")");
+                    out.println("@Embeddable");
                     out.println("@Getter");
                     out.println("@Setter");
                     out.println("@NoArgsConstructor");
                     out.println("@AllArgsConstructor");
+                    out.println("@EqualsAndHashCode");
                     out.println("@ToString");
                     out.println("");
-                    out.println("public class " + entidadMayusculaInicial + " {");
                     out.println("");
-                    out.println("@EmbeddedId");
-                    out.println("private " + entidadMayusculaInicial + "Id id;");
+                    out.println("public class " + entidadMayusculaInicial + "Id implements Serializable {");
                     out.println("");
-                    
-                    /*
-                    for (int i = 1; i <= col; i++) {
-
-                        String tipoJava = utilitarios.generaTipoJava(rsmetadatos.getColumnClassName(i));
-
-                        String nombreCamelcase = utilitarios.camelCase(rsmetadatos.getColumnName(i));
-
-                        System.out.print("@Column");
-                        if (rsmetadatos.isNullable(i) == 0 && tipoJava.equals("Date") && tipoJava.equals("Timestamp")) {
-                            System.out.println("(nullable = false)");
-                        }
-                        if (rsmetadatos.isNullable(i) == 0
-                                && (!tipoJava.equals("Date") && !tipoJava.equals("Timestamp"))) {
-                            System.out.println(
-                                    "(nullable = false, length = " + rsmetadatos.getColumnDisplaySize(i) + ")");
-                        }
-                        if (rsmetadatos.isNullable(i) == 1
-                                && (!tipoJava.equals("Date") && !tipoJava.equals("Timestamp"))) {
-                            System.out.println("(length = " + rsmetadatos.getColumnDisplaySize(i) + ")");
-
-                        }
-                        if (rsmetadatos.isNullable(i) == 1
-                                && (tipoJava.equals("Date") && tipoJava.equals("Timestamp"))) {
-                            System.out.println("\n");
-                        }
-
-                        System.out.println("private " + tipoJava + " " + nombreCamelcase + ";");
-
-                        out.print("@Column");
-
-                        System.out.println("");
-                        if (rsmetadatos.isNullable(i) == 0 && tipoJava.equals("Date") && tipoJava.equals("Timestamp")) {
-                            out.println("(nullable = false)");
-                        }
-                        if (rsmetadatos.isNullable(i) == 0
-                                && (!tipoJava.equals("Date") && !tipoJava.equals("Timestamp"))) {
-                            out.println("(nullable = false, length = " + rsmetadatos.getColumnDisplaySize(i) + ")");
-                        }
-                        if (rsmetadatos.isNullable(i) == 1
-                                && (!tipoJava.equals("Date") && !tipoJava.equals("Timestamp"))) {
-                            out.println("(length = " + rsmetadatos.getColumnDisplaySize(i) + ")");
-
-                        }
-                        if (rsmetadatos.isNullable(i) == 1
-                                && (tipoJava.equals("Date") || tipoJava.equals("Timestamp"))) {
-                            out.println("");
-                        }
-
-                        out.println("private " + tipoJava + " " + nombreCamelcase + ";");
-
-                        out.println("");
-                    }
-                     */
+                    out.println("   private static final long serialVersionUID = 1L;");
+                    out.println("");
 
                     while (relaciones.next()) {
 
                         camelCaseRelacionesCampo = utilitarios.camelCase(relaciones.getString(3));
                         camelCaseRelacionesTabla = utilitarios.camelCase(relaciones.getString(5));
 
-                        System.out.println("@ManyToOne(fetch = FetchType.LAZY)");
-                        System.out.println("@JoinColumn(name = " + relaciones.getString(3) + ", nullable = false)");
-                        System.out
-                                .println("private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
-                                        + camelCaseRelacionesCampo + ";");
-                        System.out.println("");
+                        // System.out.println(" @Column(name = \"" + relaciones.getString(3) + "\",
+                        // nullable = false, updatable = false)");
+                        for (int i = 1; i <= col; i++) {
 
-                        out.println("@ManyToOne(fetch = FetchType.LAZY)");
-                        out.println("@JoinColumn(name = " + relaciones.getString(3) + ", nullable = false)");
-                        out.println("private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
-                                + camelCaseRelacionesCampo + ";");
-                        out.println("");
+                            String tipoJava = utilitarios.generaTipoJava(rsmetadatos.getColumnClassName(i));
+                            String nombreCamelcase = utilitarios.camelCase(rsmetadatos.getColumnName(i));
+
+                            if (nombreCamelcase.equals(camelCaseRelacionesCampo)) {
+
+                                if (tipoJava.equals("Integer")) {
+                                    System.out.println("   @Column(name = \"" + relaciones.getString(3)
+                                            + "\", nullable = false, updatable = false)");
+                                    System.out.println("   private Long " + nombreCamelcase + ";");
+                                } else {
+                                    System.out.println("   @Column(name = \"" + relaciones.getString(3)
+                                            + "\", nullable = false, updatable = false)");
+                                    System.out.println("   private " + tipoJava + " " + nombreCamelcase + ";");
+                                }
+
+                                System.out.println("");
+
+                                if (tipoJava.equals("Integer")) {
+                                    out.println("   @Column(name = \"" + relaciones.getString(3)
+                                            + "\", nullable = false, updatable = false)");
+                                    out.println("   private Long " + nombreCamelcase + ";");
+                                } else {
+                                    out.println("   @Column(name = \"" + relaciones.getString(3)
+                                            + "\", nullable = false, updatable = false)");
+                                    out.println("   private " + tipoJava + " " + nombreCamelcase + ";");
+                                }
+                                // out.println(" private " + tipoJava + " "+nombreCamelcase+" ;");
+                                out.println("");
+                            }
+
+                        }
+                        // System.out
+                        // .println(" private " +
+                        // utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
+                        // + camelCaseRelacionesCampo + ";");
+                        // System.out.println("");
+
+                        // out.println(" @Column(name = \"" + relaciones.getString(3) + "\", nullable =
+                        // false, updatable = false)");
+                        // out.println(" private " +
+                        // utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
+                        // + camelCaseRelacionesCampo + ";");
+                        // out.println("");
 
                     }
                     out.println("}");

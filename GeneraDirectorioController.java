@@ -36,13 +36,19 @@ public class GeneraDirectorioController {
                     out.println("import org.springframework.web.bind.annotation.RestController;");
                     out.println("");
                     out.println(
+                        "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
+                                + ";");
+                out.println(
+                        "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
+                                + "Id;");
+                    out.println(
                             "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                     + ";");
                     out.println(
                             "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                                 + "Id;");
                     out.println("import " + nombreDeAplicacion + "." + nombreEntidad + ".service.impl."
-                            + entidadMayusculaInicial + "ServiceImpl;");
+                            + entidadMayusculaInicial + "Service;");
                     out.println("");
                     out.println("@RestController");
                     out.println("@CrossOrigin(origins = \"*\")");
@@ -52,6 +58,20 @@ public class GeneraDirectorioController {
                                 "public class " + entidadMayusculaInicial
                                         + "Controller {");
                   
+                    out.println("");
+                    out.println("   @Autowired");
+                    out.println("   private " + entidadMayusculaInicial + "Service " + nombreEntidad + "Service;");
+                    out.println("");
+                    out.println("   @GetMapping(\"/paged\")");
+                    out.println("   public ResponseEntity<?> getAll(Pageable pageable) {");
+                    out.println("      try {");
+                    out.println("         return ResponseEntity.status(HttpStatus.OK).body(ofertaContraService.findALL(pageable));");
+                    out.println("      } catch (Exception e) {");
+                    out.println("         return ResponseEntity.status(HttpStatus.NOT_FOUND)");
+                    out.println("              .body(\"{\\\"error\\\":\\\"Error. Por favor intente más tarde.\\\"}\");");
+                    out.println("      }");
+                    out.println("   }");
+
                     out.println("");
                     out.println("");
                     out.println("}");

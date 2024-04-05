@@ -23,7 +23,7 @@ public class GeneraDirectorioEntity {
         File directorioEntity = new File(directorioEntidad);
 
         if (directorioEntity.mkdir()) {
-            System.out.println("   Directorio " + nombreEntidad + "/entity creado satisfactoriamente.");
+            System.out.println("Directorio " + nombreEntidad + "/entity creado satisfactoriamente.");
 
             Utilitarios utilitarios = new Utilitarios();
 
@@ -109,6 +109,8 @@ public class GeneraDirectorioEntity {
 
                     out.println("package " + paquete + "." + nombreEntidad + ".entity;");
                     out.println("");
+                    out.println("import com.fasterxml.jackson.annotation.JsonIgnore;");
+                    out.println("");
                     out.println("import jakarta.persistence.Column;");
                     out.println("import jakarta.persistence.EmbeddedId;");
                     out.println("import jakarta.persistence.Entity;");
@@ -119,37 +121,39 @@ public class GeneraDirectorioEntity {
                     out.println("import jakarta.persistence.OneToMany;");
                     out.println("import jakarta.persistence.MapsId;");
                     out.println("import jakarta.persistence.Table;");
-                    out.println("import lombok.AllArgsConstructor;");
+                    out.println("");
                     out.println("import lombok.Getter;");
-                    out.println("import lombok.NoArgsConstructor;");
                     out.println("import lombok.Setter;");
+                    out.println("import lombok.AllArgsConstructor;");
+                    out.println("import lombok.NoArgsConstructor;");
                     out.println("import lombok.ToString;");
                     out.println("");
                     out.println("import java.util.Set;");
-                    out.println("");
-                    out.println("import com.fasterxml.jackson.annotation.JsonIgnore;");
                     out.println("");
                     out.println("@Entity");
                     out.println("@Table(schema = \"" + schema + "\", name = \"" + nombreTablaValidada + "\")");
                     out.println("@Getter");
                     out.println("@Setter");
-                    out.println("@NoArgsConstructor");
                     out.println("@AllArgsConstructor");
+                    out.println("@NoArgsConstructor");
                     out.println("@ToString");
                     out.println("");
                     out.println("public class " + entidadMayusculaInicial + " {");
                     out.println("");
-                    out.println("@EmbeddedId");
-                    out.println("private " + entidadMayusculaInicial + "Id id;");
+                    out.println("   @EmbeddedId");
+                    out.println("   private " + entidadMayusculaInicial + "Id id;");
                     out.println("");
 
                     for (int i = 1; i <= col; i++) {
+
+                        // se debe desarrollor la funcionalidad de quitar los campos iguales de relaciones y los de la base de datos
+                        // ya que va a dar error si no se elimina los campos, o se cambie el nombre
 
                         String tipoJava = utilitarios.generaTipoJava(rsmetadatos.getColumnClassName(i));
 
                         String nombreCamelcase = utilitarios.camelCase(rsmetadatos.getColumnName(i));
 
-                        System.out.print("@Column");
+                        System.out.print("   @Column");
                         if (rsmetadatos.isNullable(i) == 0 && tipoJava.equals("Date") && tipoJava.equals("Timestamp")) {
                             System.out.println("(nullable = false)");
                         }
@@ -168,9 +172,15 @@ public class GeneraDirectorioEntity {
                             System.out.println("\n");
                         }
 
-                        System.out.println("private " + tipoJava + " " + nombreCamelcase + ";");
+                        if (tipoJava.equals("Integer")) {
+                            System.out.println("   private Long " + nombreCamelcase + ";");
+                        } else {
+                            System.out.println("   private " + tipoJava + " " + nombreCamelcase + ";");
+                        }
 
-                        out.print("@Column");
+                        //System.out.println("");
+                       
+                        out.print("   @Column");
 
                         System.out.println("");
                         if (rsmetadatos.isNullable(i) == 0 && tipoJava.equals("Date") && tipoJava.equals("Timestamp")) {
@@ -190,9 +200,14 @@ public class GeneraDirectorioEntity {
                             out.println("");
                         }
 
-                        out.println("private " + tipoJava + " " + nombreCamelcase + ";");
+                        if (tipoJava.equals("Integer")) {
+                            out.println("   private Long " + nombreCamelcase + ";");
+                        } else {
+                            out.println("   private " + tipoJava + " " + nombreCamelcase + ";");
+                        }
 
                         out.println("");
+                       
                     }
 
                     while (relaciones.next()) {
@@ -200,16 +215,20 @@ public class GeneraDirectorioEntity {
                         camelCaseRelacionesCampo = utilitarios.camelCase(relaciones.getString(3));
                         camelCaseRelacionesTabla = utilitarios.camelCase(relaciones.getString(5));
 
-                        System.out.println("@ManyToOne(fetch = FetchType.LAZY)");
-                        System.out.println("@JoinColumn(name = " + relaciones.getString(3) + ", nullable = false)");
+                        System.out.println("   @JsonIgnore");
+                        System.out.println("   @ManyToOne(fetch = FetchType.LAZY)");
+                        System.out.println("   @MapsId(\"" + camelCaseRelacionesCampo + "\")");
+                        System.out.println("   @JoinColumn(name = \"" + relaciones.getString(3) + "\", nullable = false)");
                         System.out
-                                .println("private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
+                                .println("   private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
                                         + camelCaseRelacionesCampo + ";");
                         System.out.println("");
 
-                        out.println("@ManyToOne(fetch = FetchType.LAZY)");
-                        out.println("@JoinColumn(name = " + relaciones.getString(3) + ", nullable = false)");
-                        out.println("private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
+                        out.println("   @JsonIgnore");
+                        out.println("   @ManyToOne(fetch = FetchType.LAZY)");
+                        out.println("   @MapsId(\"" + camelCaseRelacionesCampo + "\")");
+                        out.println("   @JoinColumn(name = \"" + relaciones.getString(3) + "\", nullable = false)");
+                        out.println("   private " + utilitarios.generaMayusculaInicial(camelCaseRelacionesTabla) + " "
                                 + camelCaseRelacionesCampo + ";");
                         out.println("");
 

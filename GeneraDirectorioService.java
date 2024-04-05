@@ -4,6 +4,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import ofertaContra.entity.OfertaContra;
+
 public class GeneraDirectorioService {
 
     public void generaDirectorioService(String directorioServicio, String nombreEntidad, String entidadMayusculaInicial,
@@ -27,9 +29,12 @@ public class GeneraDirectorioService {
                         "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                 + "Id;");
                 out.println("");
+                out.println("import org.springframework.data.domain.Page;");
+                out.println("import org.springframework.data.domain.Pageable;");
 
                 out.println("public interface " + entidadMayusculaInicial + "Service {");
                 out.println("");
+                out.println("   public Page<"+entidadMayusculaInicial+"> findALL(Pageable pageable) throws Exception;");
                 out.println("");
                 out.println("}");
                
