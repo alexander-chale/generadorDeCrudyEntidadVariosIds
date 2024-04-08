@@ -4,8 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import ofertaContra.entity.OfertaContra;
-
 public class GeneraDirectorioService {
 
     public void generaDirectorioService(String directorioServicio, String nombreEntidad, String entidadMayusculaInicial,

@@ -48,8 +48,9 @@ public class GeneraDirectorioEntity {
 
             Connection conexion;
             Statement st;
-
             ResultSetMetaData rsmetadatos;
+
+            ResultSetMetaData rsmetadatosNombreCampo;
 
             Class.forName("org.postgresql.Driver");
 
@@ -63,11 +64,33 @@ public class GeneraDirectorioEntity {
 
             System.out.println("select * from " + schema + "." + nombreTablaValidada);
 
+
             ResultSet rs = st.executeQuery("select * from " + schema + "." + nombreTablaValidada);
 
             rsmetadatos = rs.getMetaData();
 
             int col = rsmetadatos.getColumnCount();
+
+            System.out.println("Columnas: " + col);
+
+            // Aqui otra consulta
+
+            System.out.println("\nObteniendo Informacion sobre una consulta con un ResultSet...");
+
+            /* 
+            System.out.println("SELECT k1.column_name FROM information_schema.columns k1 where k1.table_name ='" + nombreTablaValidada+"';");
+
+            
+            ResultSet rsNombreCampo = st.executeQuery("SELECT k1.column_name FROM information_schema.columns k1 where k1.table_name ='" + nombreTablaValidada+"';");
+
+       
+            while (rsNombreCampo.next()) {
+
+                String  camelCaseRelacionesTabla2 = utilitarios.camelCase(rsNombreCampo.getString(1));
+                System.out.println("aqui deberia haber algo " + camelCaseRelacionesTabla2 );
+                 
+             }
+             */
 
             ResultSet relaciones = st.executeQuery("SELECT k1.table_schema,\n" + //
                     "       k1.table_name,\n" + //
@@ -86,7 +109,7 @@ public class GeneraDirectorioEntity {
             String camelCaseRelacionesCampo = null;
             String camelCaseRelacionesTabla = null;
 
-            System.out.println("Columnas: " + col);
+            
 
             // File archivo = new File(nombre+"/entity");
 
@@ -143,6 +166,13 @@ public class GeneraDirectorioEntity {
                     out.println("   @EmbeddedId");
                     out.println("   private " + entidadMayusculaInicial + "Id id;");
                     out.println("");
+
+
+
+               
+         
+                     
+
 
                     for (int i = 1; i <= col; i++) {
 

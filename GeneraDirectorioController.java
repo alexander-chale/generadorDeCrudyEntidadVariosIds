@@ -38,16 +38,10 @@ public class GeneraDirectorioController {
                     out.println(
                         "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                 + ";");
-                out.println(
+                    out.println(
                         "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
                                 + "Id;");
-                    out.println(
-                            "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
-                                    + ";");
-                    out.println(
-                            "import " + nombreDeAplicacion + "." + nombreEntidad + ".entity." + entidadMayusculaInicial
-                                                + "Id;");
-                    out.println("import " + nombreDeAplicacion + "." + nombreEntidad + ".service.impl."
+                    out.println("import " + nombreDeAplicacion + "." + nombreEntidad + ".service."
                             + entidadMayusculaInicial + "Service;");
                     out.println("");
                     out.println("@RestController");
@@ -65,7 +59,7 @@ public class GeneraDirectorioController {
                     out.println("   @GetMapping(\"/paged\")");
                     out.println("   public ResponseEntity<?> getAll(Pageable pageable) {");
                     out.println("      try {");
-                    out.println("         return ResponseEntity.status(HttpStatus.OK).body(ofertaContraService.findALL(pageable));");
+                    out.println("         return ResponseEntity.status(HttpStatus.OK).body("+nombreEntidad+"Service.findALL(pageable));");
                     out.println("      } catch (Exception e) {");
                     out.println("         return ResponseEntity.status(HttpStatus.NOT_FOUND)");
                     out.println("              .body(\"{\\\"error\\\":\\\"Error. Por favor intente más tarde.\\\"}\");");

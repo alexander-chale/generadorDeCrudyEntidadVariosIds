@@ -4,7 +4,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import ofertaContra.entity.OfertaContra;
 
 public class GeneraDirectorioServiceImpl {
 
