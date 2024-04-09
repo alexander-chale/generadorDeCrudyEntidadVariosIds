@@ -55,6 +55,17 @@ public class GeneraDirectorioServiceImpl {
                 out.println("   @Autowired");
                 out.println("   private " + entidadMayusculaInicial + "Repository " + nombreEntidad + "Repository;");
                 out.println("");
+                out.println("   @Override");
+                out.println("   public List<"+entidadMayusculaInicial+"> findALL() throws Exception {");
+                out.println("      try {");
+                out.println("          List<"+entidadMayusculaInicial+"> entities = "+nombreEntidad+"Repository.findAll();");
+                out.println("          return entities;");
+                out.println("      } catch (Exception e) {");
+                out.println("          throw new Exception(e.getMessage());");
+                out.println("      }");
+                out.println("   }");
+                      
+                out.println("");
 
                 out.println("   @Override");
                 out.println("   public Page<"+entidadMayusculaInicial+"> findALL(Pageable pageable) throws Exception {");
@@ -67,6 +78,30 @@ public class GeneraDirectorioServiceImpl {
                 out.println("   }");
                  
                 out.println("");
+                out.println("   //@Override");
+                out.println("   //@Transactional");
+                out.println("   //public void save"+entidadMayusculaInicial+"(Long id, String rif) throws Exception {");
+                out.println("        //try {");
+	        out.println("          //"+nombreEntidad+"Repository.save"+entidadMayusculaInicial+"(id, rif);");
+                out.println("       //} catch (Exception e) { throw new Exception(e.getMessage());");
+	        out.println("     //}");	
+                out.println("   //}");
+                out.println("");
+
+                out.println("");
+                out.println("   //@Override");
+                out.println("   //@Transactional");
+                out.println("   //public void delete"+entidadMayusculaInicial+"(Long id, String rif) throws Exception {");
+                out.println("        //try {");
+	        out.println("          //"+nombreEntidad+"Repository.delete"+entidadMayusculaInicial+"(id, rif);");
+                out.println("       //} catch (Exception e) { throw new Exception(e.getMessage());");
+	        out.println("     //}");	
+                out.println("   //}");
+                out.println("");
+
+
+
+                
                 out.println("}");
            
                     System.out.println("      Archivo " + entidadMayusculaInicial

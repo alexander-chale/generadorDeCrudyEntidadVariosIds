@@ -7,7 +7,7 @@ import java.io.PrintWriter;
 public class GeneraDirectorioRepository {
 
     public void generaDirectorioRepository(String directorioRepositorio, String nombreEntidad,
-            String entidadMayusculaInicial, String nombreDeAplicacion) {
+            String entidadMayusculaInicial, String nombreDeAplicacion, String nombreTablaValidada) {
         File directorioRepository = new File(directorioRepositorio);
         if (directorioRepository.mkdir()) {
             System.out.println("   Directorio " + nombreEntidad + "/repository creado satisfactoriamente.");
@@ -37,6 +37,14 @@ public class GeneraDirectorioRepository {
 
                
                 out.println("");
+                out.println("   //@Modifying");
+                out.println("   //@Query(value = \"INSERT INTO cusg."+nombreTablaValidada+" (co_empresa, co_rif_usua_cont) VALUES (?1, ?2)\", nativeQuery = true)");
+                out.println("   //void save"+entidadMayusculaInicial+"(Long id, String rif);");
+                out.println("");
+                out.println("");
+                out.println("   //@Modifying");
+                out.println("   //@Query(value = \"DELETE FROM cusg."+nombreTablaValidada+" WHERE co_empresa=?1 AND co_rif_usua_cont=?2\", nativeQuery = true)");
+                out.println("   //void delete"+entidadMayusculaInicial+"(Long id, String rif);");
                 out.println("");
                 out.println("}");
                

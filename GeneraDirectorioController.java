@@ -31,6 +31,7 @@ public class GeneraDirectorioController {
                     out.println("import org.springframework.web.bind.annotation.PathVariable;");
                     out.println("import org.springframework.web.bind.annotation.PostMapping;");
                     out.println("import org.springframework.web.bind.annotation.PutMapping;");
+                    out.println("import org.springframework.web.bind.annotation.DeleteMapping;");
                     out.println("import org.springframework.web.bind.annotation.RequestBody;");
                     out.println("import org.springframework.web.bind.annotation.RequestMapping;");
                     out.println("import org.springframework.web.bind.annotation.RestController;");
@@ -55,7 +56,19 @@ public class GeneraDirectorioController {
                     out.println("");
                     out.println("   @Autowired");
                     out.println("   private " + entidadMayusculaInicial + "Service " + nombreEntidad + "Service;");
+                    
                     out.println("");
+                    out.println("   @GetMapping(\"\")");
+                    out.println("   public ResponseEntity<?> getAll() {");
+                    out.println("      try {");
+                    out.println("         return ResponseEntity.status(HttpStatus.OK).body("+nombreEntidad+"Service.findALL());");
+                    out.println("      } catch (Exception e) {");
+                    out.println("         return ResponseEntity.status(HttpStatus.NOT_FOUND)");
+                    out.println("              .body(\"{\\\"error\\\":\\\"Error. Por favor intente más tarde.\\\"}\");");
+                    out.println("      }");
+                    out.println("   }");
+                    out.println("");
+
                     out.println("   @GetMapping(\"/paged\")");
                     out.println("   public ResponseEntity<?> getAll(Pageable pageable) {");
                     out.println("      try {");
@@ -66,8 +79,27 @@ public class GeneraDirectorioController {
                     out.println("      }");
                     out.println("   }");
 
+         
+
                     out.println("");
+                    out.println("   //@PostMapping(\"/save"+entidadMayusculaInicial+"\")");
+                    out.println("   //public void save"+entidadMayusculaInicial+"(@RequestBody "+entidadMayusculaInicial+" entity) {"); 
+                    out.println("        //try {");
+                    out.println("           //"+nombreEntidad+"Service.save"+entidadMayusculaInicial+"(entity.getId().getCoEmpresa(), entity.getId().getCoRifUsuaCont());");  
+                    out.println("       //} catch (Exception e) {");
+                    out.println("    //}");
+                    out.println("  //}");
                     out.println("");
+                  
+                    out.println("   //@DeleteMapping(\"/delete"+entidadMayusculaInicial+"\")");
+                    out.println("   //public void delete"+entidadMayusculaInicial+"(@RequestBody "+entidadMayusculaInicial+" entity) {"); 
+                    out.println("        //try {");
+                    out.println("           //"+nombreEntidad+"Service.delete"+entidadMayusculaInicial+"(entity.getId().getCoEmpresa(), entity.getId().getCoRifUsuaCont());");  
+                    out.println("       //} catch (Exception e) {");
+                    out.println("    //}");
+                    out.println("  //}");
+                    out.println("");
+
                     out.println("}");
 
                     

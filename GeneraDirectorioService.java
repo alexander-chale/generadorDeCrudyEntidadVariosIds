@@ -29,10 +29,19 @@ public class GeneraDirectorioService {
                 out.println("");
                 out.println("import org.springframework.data.domain.Page;");
                 out.println("import org.springframework.data.domain.Pageable;");
+                out.println("");
+                out.println("import java.util.List;");
+                out.println("");
 
                 out.println("public interface " + entidadMayusculaInicial + "Service {");
                 out.println("");
+                out.println("   public List<"+entidadMayusculaInicial+"> findALL() throws Exception;");
+                out.println("");
                 out.println("   public Page<"+entidadMayusculaInicial+"> findALL(Pageable pageable) throws Exception;");
+                out.println("");
+                out.println("   //public void save"+entidadMayusculaInicial+"(Long id, String rif) throws Exception;");
+                out.println("");
+                out.println("   //public void delete"+entidadMayusculaInicial+"(Long id, String rif) throws Exception;");
                 out.println("");
                 out.println("}");
                

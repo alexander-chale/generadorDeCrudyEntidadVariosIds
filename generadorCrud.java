@@ -4,6 +4,7 @@ import java.io.InputStream;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.Scanner;
+import java.io.File;
 
 public class generadorCrud {
     public static void main(String[] args) throws IOException, ClassNotFoundException, SQLException {
@@ -106,9 +107,10 @@ public class generadorCrud {
             generaDirectorioController.generaDirectorioController(nombreEntidad, directorioControlador,
                     entidadMayusculaInicial, paquete);
 
+                   
             GeneraDirectorioEntity generaDirectorioEntity = new GeneraDirectorioEntity();
             generaDirectorioEntity.GeneraDirectorioEntity(directorioEntidad, nombreEntidad, entidadMayusculaInicial, tipoSo,nombreTablaValidada);
-
+ 
             GeneraDirectorioEntityId generaDirectorioEntityId = new GeneraDirectorioEntityId();
             generaDirectorioEntityId.GeneraDirectorioEntityId(directorioEntidad, nombreEntidad, entidadMayusculaInicial, tipoSo,nombreTablaValidada);
 
@@ -119,9 +121,11 @@ public class generadorCrud {
             GeneraDirectorioEntityMapper generaDirectorioEntityMapper = new GeneraDirectorioEntityMapper();
             generaDirectorioEntityMapper.GeneraDirectorioEntityMapper(nombreEntidad);
 
+            
+
             GeneraDirectorioRepository generaDirectorioRepository = new GeneraDirectorioRepository();
             generaDirectorioRepository.generaDirectorioRepository(directorioRepositorio, nombreEntidad,
-                    entidadMayusculaInicial, paquete);
+                    entidadMayusculaInicial, paquete,nombreTablaValidada);
 
             GeneraDirectorioService generaDirectorioService = new GeneraDirectorioService();
             generaDirectorioService.generaDirectorioService(directorioServicio, nombreEntidad, entidadMayusculaInicial,
